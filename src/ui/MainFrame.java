@@ -2,6 +2,8 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import ui.PatientPanel;
+
 
 public class MainFrame extends JFrame {
 
@@ -12,7 +14,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
 
         JTabbedPane tabs = new JTabbedPane();
-        tabs.addTab("Patients", placeholderPanel("Patients panel (next step: JTable + CRUD)"));
+        tabs.addTab("Patients", new PatientPanel());
         tabs.addTab("Clinicians", placeholderPanel("Clinicians panel (next step: JTable + CRUD)"));
         tabs.addTab("Appointments", placeholderPanel("Appointments panel (next step: JTable + CRUD)"));
         tabs.addTab("Prescriptions", placeholderPanel("Prescriptions panel (next step: JTable + CRUD)"));
