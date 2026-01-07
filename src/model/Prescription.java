@@ -21,4 +21,15 @@ public class Prescription {
 
     public Patient getPatient() { return patient; }
     public Drug getDrug() { return drug; }
+    public LocalDate getDateIssued() {
+        return dateIssued;
+    }
+    public Condition getCondition() {
+        return condition;
+    }
+
+    public int getPrescriptionId() {
+        return prescriptionId;
+    }
+
 }
