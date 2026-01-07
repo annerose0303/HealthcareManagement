@@ -94,11 +94,15 @@ public final class csvUtils {
 
     public static List<Patient> loadPatients(String path) {
         try {
+
+
             List<Map<String, String>> rows = readAsMaps(Paths.get(path));
             List<Patient> patients = new ArrayList<>();
 
             for (Map<String, String> row : rows) {
-                int id = Integer.parseInt(row.getOrDefault("patient_id", "0"));
+                String rawId = row.getOrDefault("patient_id", "0").trim();
+                int id = parsePatientId(rawId);
+
 
                 String first = row.getOrDefault("first_name", "").trim();
                 String last = row.getOrDefault("last_name", "").trim();
@@ -118,5 +122,16 @@ public final class csvUtils {
             throw new RuntimeException("Failed to load patients from: " + path, e);
         }
     }
+
+    private static int parsePatientId(String rawId) {
+        if (rawId == null || rawId.isBlank()) return 0;
+
+        // Handles formats like "P001", "P12", as well as plain "123"
+        String digits = rawId.replaceAll("[^0-9]", "");
+        if (digits.isBlank()) return 0;
+
+        return Integer.parseInt(digits);
+    }
+
 
 }
