@@ -5,6 +5,9 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
+import model.Patient;
+
+
 
 public final class csvUtils {
     private csvUtils() {}
@@ -88,4 +91,32 @@ public final class csvUtils {
         String s = v.replace("\"", "\"\"");
         return needsQuotes ? "\"" + s + "\"" : s;
     }
+
+    public static List<Patient> loadPatients(String path) {
+        try {
+            List<Map<String, String>> rows = readAsMaps(Paths.get(path));
+            List<Patient> patients = new ArrayList<>();
+
+            for (Map<String, String> row : rows) {
+                int id = Integer.parseInt(row.getOrDefault("patient_id", "0"));
+
+                String first = row.getOrDefault("first_name", "").trim();
+                String last = row.getOrDefault("last_name", "").trim();
+                String name = (first + " " + last).trim();
+
+                String email = row.getOrDefault("email", "").trim();
+                String phone = row.getOrDefault("phone_number", "").trim();
+                String nhs = row.getOrDefault("nhs_number", "").trim();
+                String gpSurgeryId = row.getOrDefault("gp_surgery_id", "").trim();
+
+                patients.add(new Patient(id, name, email, phone, nhs, gpSurgeryId));
+            }
+
+            return patients;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load patients from: " + path, e);
+        }
+    }
+
 }
