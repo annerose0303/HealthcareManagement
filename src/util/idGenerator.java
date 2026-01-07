@@ -1,4 +1,16 @@
+
 package util;
 
-public class idGenerator {
+import java.util.concurrent.atomic.AtomicInteger;
+
+public final class idGenerator {
+    private final AtomicInteger next;
+
+    public idGenerator(int startInclusive) {
+        this.next = new AtomicInteger(startInclusive);
+    }
+
+    public int nextId() {
+        return next.getAndIncrement();
+    }
 }
