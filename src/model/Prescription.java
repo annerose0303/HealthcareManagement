@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 
 public class Prescription {
 
@@ -22,6 +23,10 @@ public class Prescription {
     private final String issueDate;
     private final String collectionDate;
 
+    /**
+     * Full constructor matching prescriptions.csv columns (15 fields).
+     * Use this when loading rows directly from the CSV file.
+     */
     public Prescription(
             int prescriptionId,
             int patientId,
@@ -56,6 +61,42 @@ public class Prescription {
         this.collectionDate = nullToEmpty(collectionDate);
     }
 
+    /**
+     * Simplified constructor for UI-created prescriptions.
+     * Keeps CSV fields consistent, fills non-essential columns safely.
+     */
+    public Prescription(
+            int prescriptionId,
+            int patientId,
+            int clinicianId,
+            int appointmentId,
+            String medicationName,
+            String dosage,
+            String frequency,
+            int durationDays,
+            int quantity,
+            String instructions,
+            String pharmacyName
+    ) {
+        this(
+                prescriptionId,
+                patientId,
+                clinicianId,
+                appointmentId,
+                LocalDate.now().toString(),                 // prescriptionDate
+                medicationName,
+                dosage,
+                frequency,
+                durationDays,
+                quantity,
+                instructions,
+                pharmacyName,
+                "ACTIVE",                                   // status default
+                LocalDate.now().toString(),                 // issueDate default
+                ""                                          // collectionDate default
+        );
+    }
+
     private static String nullToEmpty(String s) {
         return s == null ? "" : s.trim();
     }
@@ -78,4 +119,29 @@ public class Prescription {
     public String getStatus() { return status; }
     public String getIssueDate() { return issueDate; }
     public String getCollectionDate() { return collectionDate; }
+
+    /** Header matching your prescriptions.csv (spelling corrected to prescription_id). */
+    public static String csvHeader() {
+        return "prescription_id,patient_id,clinician_id,appointment_id,prescription_date,medication_name," +
+                "dosage,frequency,duration_days,quantity,instructions,pharmacy_name,status,issue_date,collection_date";
+    }
+
+    /** Produces one CSV row in the same column order as the header. */
+    public String toCsvRow() {
+        return prescriptionId + "," +
+                patientId + "," +
+                clinicianId + "," +
+                appointmentId + "," +
+                prescriptionDate + "," +
+                medicationName + "," +
+                dosage + "," +
+                frequency + "," +
+                durationDays + "," +
+                quantity + "," +
+                instructions + "," +
+                pharmacyName + "," +
+                status + "," +
+                issueDate + "," +
+                collectionDate;
+    }
 }
