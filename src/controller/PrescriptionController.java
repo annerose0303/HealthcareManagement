@@ -23,35 +23,23 @@ public class PrescriptionController {
         return Collections.unmodifiableList(prescriptions);
     }
 
-    public void loadPrescriptions() throws IOException {
-        prescriptions.clear();
-        prescriptions.addAll(csvService.loadPrescriptions(PRESCRIPTIONS_FILE));
+    /**
+     * Prescriptions are created via UI and appended to CSV.
+     * Existing CSV prescriptions are not reloaded (coursework-safe).
+     */
+    public void loadPrescriptions() {
+        // display prescriptions created during runtime
     }
 
-    /**
-     * Adds to in-memory list AND appends to prescriptions.csv for coursework evidence.
-     */
     public void addPrescriptionAndPersist(Prescription prescription) throws IOException {
-        if (prescription == null) throw new IllegalArgumentException("prescription must not be null");
         prescriptions.add(prescription);
         csvService.appendPrescription(PRESCRIPTIONS_FILE, prescription);
     }
 
-    public void updatePrescription(int index, Prescription updated) {
-        if (updated == null) throw new IllegalArgumentException("updated prescription must not be null");
-        if (index < 0 || index >= prescriptions.size()) throw new IndexOutOfBoundsException("Invalid prescription index");
-        prescriptions.set(index, updated);
-        // Note: we do NOT rewrite the CSV here (simple coursework constraint).
-    }
-
-    public void deletePrescription(int index) {
-        if (index < 0 || index >= prescriptions.size()) throw new IndexOutOfBoundsException("Invalid prescription index");
-        prescriptions.remove(index);
-        // Note: we do NOT rewrite the CSV here (simple coursework constraint).
-    }
-
     public int nextPrescriptionId() {
-        return prescriptions.stream().mapToInt(Prescription::getPrescriptionId).max().orElse(0) + 1;
+        return prescriptions.stream()
+                .mapToInt(Prescription::getPrescriptionId)
+                .max()
+                .orElse(0) + 1;
     }
 }
-
