@@ -1,0 +1,33 @@
+e254273 2026-01-14 Load prescriptions from CSV as display rows and append new prescriptions safely
+6f823c3 2026-01-14 Reflective report on part2
+440bf22 2026-01-13 Added AppointmentPanel to load existing appointments, edit, add and delete new ones
+b91f1a9 2026-01-13 Remove unused Main entry point in favour of ui.MainFrame
+8947c42 2026-01-13 Add ReferralPanel demonstrating Singleton referral queue and file output
+b38e5b5 2026-01-13 Fix clinician and appointment CSV loading
+8e2fd4c 2026-01-12 Add Swing MainFrame and PatientPanel with CRUD functionality
+9eb0ef0 2026-01-10 Add MVC controllers to mediate between Swing UI and services
+60ec2fd 2026-01-10 Implement Singleton ReferralService with in-memory queue and referral file output
+d5c01fc 2026-01-10 Add referral text generation to Referral domain model
+8da2242 2026-01-10 Align CSVService prescription loading and appending with CSV-based Prescription model
+5d83240 2026-01-10 Add simplified Prescription constructor to support UI creation and CSV workflows
+543bf96 2026-01-10 Add simplified Prescription constructor to support UI creation and CSV workflows
+d35d333 2026-01-10 Remove repository layer in favour of service-based data management
+c1dacb4 2026-01-07 feat: loaded Patients
+5c689f5 2026-01-07 fix: handle non-numeric patient_id values in patients.csv
+c6d686f 2026-01-07 fix: add csvUtils.loadPatients mapper for patients.csv
+6c69867 2026-01-07 Add CSV parsing and utility helpers for file-based persistence
+379297e 2026-01-07 feat: add Swing app shell and valid entry point
+3923ee5 2026-01-07 Add getter for prescription issue date to support repository sorting
+18e6b5b 2026-01-07 Introduce in-memory repositories for core entities
+9df951c 2026-01-07 Added CSV parsing and utility helpers for file-based persistence
+1968caf 2025-12-30 Add data directory with provided CSV datasets
+baf4030 2025-12-29 Add Referral domain entity
+41e96b4 2025-12-28 Structured Prescription and ehr model classes
+2d954a5 2025-12-28 Add Prescription entity linked to Patient, Condition, and Drug
+22ed222 2025-12-27 Introduce Condition and Drug classes to improve clinical modelling
+b0e96fc 2025-12-24 Add Appointment model with association to Patient
+2d9d711 2025-12-24  Created clinician heirarchy
+59d847c 2025-12-24 Created Specialist class extending User
+664aa80 2025-12-24 Created GP class extends User
+87814b5 2025-12-24 Creater Patient class extends from User
+c5eefa1 2025-12-24 Initial project setup with MVC structure
