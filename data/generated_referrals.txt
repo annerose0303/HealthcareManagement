@@ -1,0 +1,20 @@
+========== REFERRAL ==========
+Generated: 2026-01-13T03:24:18.066944
+Referral ID: 1
+Urgency: urgent
+Specialty: cardiology
+Suggested Recipient: Cardiology Department
+
+Patient Details
+Name: John Smith
+NHS Number: 1234567890
+Phone: 07123456789
+Email: john.smith@email.com
+GP Surgery: 2020-01-15
+
+Clinical Summary
+Chest pain and breathlessness
+
+Status: Created
+========== END REFERRAL ==========
+

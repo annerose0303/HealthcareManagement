@@ -109,8 +109,9 @@ public class CSVservice {
                 if (line.trim().isEmpty()) continue;
 
                 String[] a = line.split(",", -1);
-                if (a.length < 12) continue;
+                if (a.length < 13) continue;
 
+                // appointment_date (index 4) + appointment_time (index 5)
                 String date = a[4].trim();
                 String time = a[5].trim();
 
@@ -118,13 +119,14 @@ public class CSVservice {
                 try {
                     dateTime = LocalDateTime.parse(date + "T" + time);
                 } catch (Exception e) {
-                    continue; // skip bad rows safely
+                    continue; // skip malformed rows safely
                 }
 
+                // status (index 8), reason_for_visit (index 9)
                 String status = a[8].trim();
                 String reason = a[9].trim();
 
-                // Safe mapping: rotate through loaded patients
+                // Assign patients safely in a round-robin fashion
                 Patient patient = patients.get(
                         (generatedAppointmentId - 1) % patients.size()
                 );
@@ -138,8 +140,10 @@ public class CSVservice {
                 ));
             }
         }
+
         return appointments;
     }
+
 
     /* ===================== APPEND PRESCRIPTION ===================== */
 

@@ -122,7 +122,14 @@ public class PrescriptionPanel extends JPanel {
 
     private void refreshTable() {
         tableModel.setRowCount(0);
-        for (Prescription p : prescriptionController.getPrescriptions()) {
+
+        // 1) Show prescriptions loaded from CSV (display-only)
+        for (String[] row : prescriptionController.getCsvRows()) {
+            tableModel.addRow(row);
+        }
+
+        // 2) Show prescriptions created in the UI
+        for (Prescription p : prescriptionController.getCreatedPrescriptions()) {
             tableModel.addRow(new Object[]{
                     p.getPrescriptionId(),
                     p.getPatientId(),
@@ -136,6 +143,7 @@ public class PrescriptionPanel extends JPanel {
             });
         }
     }
+
 
     private void showError(String msg) {
         JOptionPane.showMessageDialog(this, msg, "Error", JOptionPane.ERROR_MESSAGE);

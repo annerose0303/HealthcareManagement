@@ -11,7 +11,12 @@ import java.util.List;
 public class PrescriptionController {
 
     private final CSVservice csvService;
-    private final List<Prescription> prescriptions = new ArrayList<>();
+
+    // CSV-loaded rows (display-only)
+    private final List<String[]> csvRows = new ArrayList<>();
+
+    // UI-created prescriptions (editable/in-memory)
+    private final List<Prescription> created = new ArrayList<>();
 
     private static final String PRESCRIPTIONS_FILE = "prescriptions.csv";
 
@@ -19,27 +24,26 @@ public class PrescriptionController {
         this.csvService = csvService;
     }
 
-    public List<Prescription> getPrescriptions() {
-        return Collections.unmodifiableList(prescriptions);
+    public List<String[]> getCsvRows() {
+        return Collections.unmodifiableList(csvRows);
     }
 
-    /**
-     * Prescriptions are created via UI and appended to CSV.
-     * Existing CSV prescriptions are not reloaded (coursework-safe).
-     */
-    public void loadPrescriptions() {
-        // display prescriptions created during runtime
+    public List<Prescription> getCreatedPrescriptions() {
+        return Collections.unmodifiableList(created);
     }
 
-    public void addPrescriptionAndPersist(Prescription prescription) throws IOException {
-        prescriptions.add(prescription);
-        csvService.appendPrescription(PRESCRIPTIONS_FILE, prescription);
+    public void loadPrescriptions() throws IOException {
+        csvRows.clear();
+        csvRows.addAll(csvService.loadPrescriptionsTableRows(PRESCRIPTIONS_FILE));
+    }
+
+    public void addPrescriptionAndPersist(Prescription p) throws IOException {
+        created.add(p);
+        csvService.appendPrescription(PRESCRIPTIONS_FILE, p);
     }
 
     public int nextPrescriptionId() {
-        return prescriptions.stream()
-                .mapToInt(Prescription::getPrescriptionId)
-                .max()
-                .orElse(0) + 1;
+        // Only for UI-created numeric IDs
+        return created.stream().mapToInt(Prescription::getPrescriptionId).max().orElse(0) + 1;
     }
 }
