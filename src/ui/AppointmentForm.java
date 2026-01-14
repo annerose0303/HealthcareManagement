@@ -56,7 +56,7 @@ public class AppointmentForm extends JDialog {
             reasonField.setText(existing.getReason());
         }
         else {
-            // sensible default
+
             dateTimeField.setText("2026-01-13T09:00");
             statusField.setText("Scheduled");
         }

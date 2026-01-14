@@ -111,7 +111,7 @@ public class CSVservice {
                 String[] a = line.split(",", -1);
                 if (a.length < 13) continue;
 
-                // appointment_date (index 4) + appointment_time (index 5)
+
                 String date = a[4].trim();
                 String time = a[5].trim();
 
@@ -119,14 +119,14 @@ public class CSVservice {
                 try {
                     dateTime = LocalDateTime.parse(date + "T" + time);
                 } catch (Exception e) {
-                    continue; // skip malformed rows safely
+                    continue;
                 }
 
                 // status (index 8), reason_for_visit (index 9)
                 String status = a[8].trim();
                 String reason = a[9].trim();
 
-                // Assign patients safely in a round-robin fashion
+
                 Patient patient = patients.get(
                         (generatedAppointmentId - 1) % patients.size()
                 );
@@ -142,6 +142,52 @@ public class CSVservice {
         }
 
         return appointments;
+    }
+    /* ===================== LOAD PRESCRIPTIONS ===================== */
+
+
+    public List<String[]> loadPrescriptionsTableRows(String filename) throws IOException {
+        List<String[]> rows = new ArrayList<>();
+
+        try (BufferedReader reader = Files.newBufferedReader(dataDir.resolve(filename))) {
+            reader.readLine(); // skip header
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty()) continue;
+
+                String[] p = line.split(",", -1);
+                if (p.length < 15) continue;
+
+
+
+                String prescriptionId = p[0].trim();
+                String patientId = p[1].trim();
+                String clinicianId = p[2].trim();
+                String appointmentId = p[3].trim();
+                String prescriptionDate = p[4].trim();
+                String medication = p[5].trim();
+                String dosage = p[6].trim();
+                String frequency = p[7].trim();
+                String status = p[12].trim();
+                String issueDate = p[13].trim();
+
+                rows.add(new String[]{
+                        prescriptionId,
+                        patientId,
+                        clinicianId,
+                        appointmentId,
+                        prescriptionDate,
+                        medication,
+                        dosage,
+                        frequency,
+                        status,
+                        issueDate
+                });
+            }
+        }
+
+        return rows;
     }
 
 

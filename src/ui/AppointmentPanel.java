@@ -147,7 +147,7 @@ public class AppointmentPanel extends JPanel {
 
         for (Appointment a : appointmentController.getAppointments()) {
             Patient p = a.getPatient();
-            LocalDateTime dt = a.getDate(); // matches your model getter
+            LocalDateTime dt = a.getDate();
 
             tableModel.addRow(new Object[]{
                     a.getAppointmentId(),

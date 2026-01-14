@@ -9,7 +9,7 @@ public class Prescription {
     private final int clinicianId;
     private final int appointmentId;
 
-    private final String prescriptionDate;   // keep as String for CSV simplicity
+    private final String prescriptionDate;
     private final String medicationName;
     private final String dosage;
     private final String frequency;
@@ -120,7 +120,7 @@ public class Prescription {
     public String getIssueDate() { return issueDate; }
     public String getCollectionDate() { return collectionDate; }
 
-    /** Header matching your prescriptions.csv (spelling corrected to prescription_id). */
+
     public static String csvHeader() {
         return "prescription_id,patient_id,clinician_id,appointment_id,prescription_date,medication_name," +
                 "dosage,frequency,duration_days,quantity,instructions,pharmacy_name,status,issue_date,collection_date";
